@@ -17,8 +17,7 @@ export default function Page() {
       <div className="container mx-auto px-2">
         <ChartSettingForm />
         <div className="flex flex-wrap gap-0.5">
-          {symbols.slice(0, 10).map((symbol) => (
-            // {symbols.map((symbol) => (
+          {symbols.map((symbol) => (
             <div key={symbol}>
               <Chart symbol={symbol} />
             </div>

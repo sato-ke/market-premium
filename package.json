@@ -1,10 +1,11 @@
 {
-  "name": "canvas-sample",
+  "name": "market-premium",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "deploy": "gh-pages -d out",
     "start": "next start",
     "lint": "next lint"
   },
