@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Market Premium Viewer
 
-## Getting Started
+Binance先物市場のプレミアム指数をリアルタイムで可視化するNext.jsアプリケーションです。
 
-First, run the development server:
+## 機能
+
+- Binance USDm先物市場の全銘柄のプレミアム指数をチャート表示
+- チャートサイズのカスタマイズ機能
+- プレミアム指数に基づいた動的な色分け表示
+- IWMA(予測FRの近似)の指標表示
+
+## 技術スタック
+
+- Next.js 14 (App Router)
+- TypeScript
+- CCXT (暗号資産取引所API)
+- Canvas API
+- Context API
+- Tailwind CSS
+
+## 開発環境のセットアップ
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 にアクセスして動作確認ができます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## プロジェクト構成
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/page.tsx` - メインページコンポーネント
+- `src/components/` - Chart、ChartSettingFormなどのUIコンポーネント
+- `src/context/` - チャート設定の状態管理
+- `src/lib/` - Binance APIとの通信、計算ロジック
 
-## Learn More
+## 使い方
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. アプリケーションを起動すると、自動的に全銘柄のチャートが表示されます
+2. 画面上部のフォームでチャートのサイズを調整できます
+3. プレミアム指数の値に応じてチャートの枠線の色が変化します
