@@ -31,3 +31,10 @@ export interface LineData {
   time: number;
   value: number;
 }
+
+export type Timeframe = '1h' | '4h' | '24h' | '1w';
+
+export interface TimeframeConfig {
+  interval: string;
+  limit: number;
+}
