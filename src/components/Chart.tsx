@@ -89,22 +89,41 @@ const drawChart = (
 
 export function Chart({ symbol }: ChartProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { width, height } = useChartContext();
+  const { width, height, timeframe } = useChartContext();
   const [chartData, setChartData] = useState<{
     emaData: LineData[];
     iwmaData: LineData[];
   } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // fetch
   useEffect(() => {
+    let isActive = true;
+    setIsLoading(true);
+    
     const fetchData = async () => {
-      const data = await getPremiumIndex(symbol);
-      const emaData = ema(data, 6);
-      const iwmaData = iwma(hlc3(data), 96);
-      setChartData({ emaData, iwmaData });
+      try {
+        const data = await getPremiumIndex(symbol, timeframe);
+        if (isActive) {
+          const emaData = ema(data, 6);
+          const iwmaData = iwma(hlc3(data), 96);
+          setChartData({ emaData, iwmaData });
+          setIsLoading(false);
+        }
+      } catch (error) {
+        if (isActive) {
+          console.error(`Failed to fetch data for ${symbol}:`, error);
+          setIsLoading(false);
+        }
+      }
     };
+    
     fetchData();
-  }, [symbol]);
+    
+    return () => {
+      isActive = false;
+    };
+  }, [symbol, timeframe]);
 
   // draw
   useEffect(() => {
@@ -116,7 +135,16 @@ export function Chart({ symbol }: ChartProps) {
   return (
     <div>
       <span className="text-white text-sm">{symbol}</span>
-      <canvas ref={canvasRef} width={width} height={height} />
+      {isLoading ? (
+        <div 
+          style={{ width, height }} 
+          className="flex items-center justify-center bg-gray-800 animate-pulse"
+        >
+          <div className="text-gray-500 text-xs">Loading...</div>
+        </div>
+      ) : (
+        <canvas ref={canvasRef} width={width} height={height} />
+      )}
     </div>
   );
 }
